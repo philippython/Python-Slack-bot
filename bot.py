@@ -3,24 +3,35 @@ file for bot creation
 
 """
 import os
-import slack
 from pathlib import Path
 from dotenv import load_dotenv
-import time
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 
-CHANNELS_1 =  ['projects','random', 'support','data','frontend']
-CHANNELS_2 =  ['announcements','backend', 'javascript']
-CHANNELS_3 =  ['python','html-css','nodejs']
-CHANNELS_4 =  ['reactjs','java','sql','powerbi']
 CHANNELS = ['reactjs','java','sql','powerbi', 'projects','random', 'support','data','frontend','announcements','backend', 'javascript','python','html-css','nodejs']
 
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
-client = slack.WebClient(token=os.environ.get('SLACK_TOKEN'))
+client = WebClient(token=os.environ.get('SLACK_TOKEN'))
 
 for channel in CHANNELS:
-    time.sleep(2)
     print(channel)
-    client.chat_postMessage(channel='#{}'.format(channel), text="""
-                            Hello everyone I'm a Bot built by Odulaja philip to detect rules violators and assessments defaulters my name is SHEGE...I'm a nice bot, I hope we get along, Nice to meet you all""")
+    try:
+        client.chat_postMessage(channel='#{}'.format(channel), text=
+"""
+To Join your respective groups, click the group tag below, only join a group at a time, for example if you are a Frontend dev and you have already mastered html and css but not JavaScript then join the JavaScript group:
+
+HTML & CSS: #html-css
+JavaScript: #javascript
+NodeJs: #nodejs
+React: #reactjs
+Python: #python
+Java: #java
+SpringBoot: #springboot
+UX/UI: #product-design
+Data Analyst (Power BI): #data
+Data/SQL: #sql
+""")
+    except SlackApiError as e:
+        print(f"Error: {e}")
