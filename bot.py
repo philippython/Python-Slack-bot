@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-CHANNELS = ['reactjs','java','sql','powerbi', 'projects','random', 'support','data','frontend','announcements','backend', 'javascript','python','html-css','nodejs']
+CHANNELS = ['reactjs','java','sql','powerbi', 'projects','random', 'support','data','frontend','backend', 'javascript','python','html-css','nodejs']
 
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
