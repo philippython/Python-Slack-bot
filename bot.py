@@ -15,11 +15,12 @@ CHANNELS = ['reactjs','java','sql','powerbi', 'projects','random', 'support','da
 
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
-
-slack_event_adapter = SlackEventAdapter()
 client = WebClient(token=os.environ.get('SLACK_TOKEN'))
 app = Flask(__name__)
 
+slack_event_adapter = SlackEventAdapter(os.environ.get('SIGNING_SECRET'), 'slack/events', app)
+
+@slack_event_adapter.message.on('message')
 
 # sending messages
 def send_message_to_channels(message, channels):
